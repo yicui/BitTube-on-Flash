@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" applicationComplete="init()"
+						xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute"
+						title="BitTube" width="1350" height="860">
+	<fx:Script>
+		<![CDATA[
+			import edu.vanderbilt.bittube.server.livestream.MulticastStream;
+			import edu.vanderbilt.bittube.server.livestream.Stream;
+			import edu.vanderbilt.bittube.server.livestream.StreamManager;
+			
+			import mx.controls.VideoDisplay;
+			import mx.controls.Alert;
+			import openflashchart.MainChart;
+			
+			private var manager_:StreamManager;
+			private const num_streams:uint = 3;
+			public function init():void
+			{
+				urls1.text = "http://58.240.120.106:554/108";
+				channelname1.text = "cctv";
+				urls2.text = "http://58.240.120.106:554/122";
+				channelname2.text = "jstv";
+				urls3.text = "http://58.240.120.106:554/118";
+				channelname3.text = "hntv";
+				
+				manager_ = new StreamManager(320, 240);
+				for (var i:uint = 0; i < num_streams; i ++)
+					manager_.AddStream(new MulticastStream(manager_));
+				
+				online_user.addChild(manager_.online_user_.chart);
+				server_load.addChild(manager_.server_load_.chart);
+				bitrate.addChild(manager_.bitrate_.chart);
+				peer_contribution.addChild(manager_.peer_percentage_.chart);
+				num_interruptions.addChild(manager_.num_interruptions_.chart);
+				http_time.addChild(manager_.http_time_.chart);
+				delay.addChild(manager_.delay_.chart);
+				symmetric_NAT.addChild(manager_.symmetric_NAT_.chart);
+				userlocation.addChild(manager_.user_location_.chart);
+			}
+			private function onClick(urls:TextInput, channelname:TextInput, videoDisplay:VideoDisplay, button:Button, stream_num:uint):void
+			{
+				try
+				{
+					if (button.label == "Start")
+					{
+						var video:Video = new Video(320, 240);
+						var stream:Stream = manager_.Start(urls.text, channelname.text, video, stream_num-1);
+						if (stream != null)
+						{
+							videoDisplay.addChild(stream.video);
+							button.label = "End";
+						}
+					}
+					else
+						if (manager_.Stop(stream_num-1) == true)	button.label = "开始";
+				}
+				catch (error:Error)
+				{
+					Alert.show(error.message);
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Style>
+		.buttonStyle {
+			color: "0x0000FF";
+			textRollOverColor: "0xFFFFFF";
+			textSelectedColor: "0xFFFFFF";
+		}
+	</fx:Style>
+	<mx:VBox width="1400" height="840">
+		<mx:HBox>
+			<mx:UIComponent id="online_user" width="320" height="240" />
+			<mx:UIComponent id="server_load" width="320" height="240" />
+			<mx:UIComponent id="bitrate" width="320" height="240" />
+			<mx:VBox>
+				<mx:VideoDisplay id="videoDisplay1" width="320" height="240" />
+				<mx:HBox>
+					<mx:TextInput id="urls1"  width="200"/>
+					<mx:TextInput id="channelname1"  width="50"/>
+					<mx:Button id="button1" label="Start" click="onClick(urls1, channelname1, videoDisplay1, button1, 1)" styleName="buttonStyle"/>
+				</mx:HBox>
+			</mx:VBox>
+		</mx:HBox>
+		<mx:HBox>
+			
+			<mx:UIComponent id="peer_contribution" width="320" height="240" />
+			<mx:UIComponent id="num_interruptions" width="320" height="240" />
+			<mx:UIComponent id="http_time" width="320" height="240" />
+			<mx:VBox>
+				<mx:VideoDisplay id="videoDisplay2" width="320" height="240" />
+				<mx:HBox>
+					<mx:TextInput id="urls2"  width="200"/>
+					<mx:TextInput id="channelname2"  width="50"/>
+					<mx:Button id="button2" label="Start" click="onClick(urls2, channelname2, videoDisplay2, button2, 2)" styleName="buttonStyle"/>
+				</mx:HBox>
+			</mx:VBox>
+		</mx:HBox>
+		<mx:HBox>
+			<mx:UIComponent id="delay" width="320" height="240" />
+			<mx:UIComponent id="symmetric_NAT" width="320" height="240" />
+			<mx:UIComponent id="userlocation" width="320" height="240" />
+			<mx:VBox>
+				<mx:VideoDisplay id="videoDisplay3" width="320" height="240" />
+				<mx:HBox>
+					<mx:TextInput id="urls3"  width="200"/>
+					<mx:TextInput id="channelname3"  width="50"/>
+					<mx:Button id="button3" label="Start" click="onClick(urls3, channelname3, videoDisplay3, button3, 3)" styleName="buttonStyle"/>
+				</mx:HBox>
+			</mx:VBox>
+		</mx:HBox>		
+	</mx:VBox>	
+</mx:WindowedApplication>

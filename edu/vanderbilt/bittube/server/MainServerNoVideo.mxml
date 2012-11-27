@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" applicationComplete="init()"
+						xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute"
+						title="BitTube" width="1350" height="860">
+	<fx:Script>
+		<![CDATA[
+			import edu.vanderbilt.bittube.server.livestream.Stream;
+			import edu.vanderbilt.bittube.server.livestream.MulticastStream;
+			import edu.vanderbilt.bittube.server.livestream.StreamManager;
+			import mx.controls.VideoDisplay;
+			import openflashchart.MainChart;
+			import mx.controls.Alert;
+			
+			private var manager_:StreamManager;
+			private const num_streams:uint = 12;
+			public function init():void
+			{
+				urls1.text = "http://122.193.8.198:554/137";
+				channelname1.text = "cctv";
+				urls2.text = "http://122.193.8.198:554/138";
+				channelname2.text = "gdtv";
+				urls3.text = "http://122.193.8.198:554/144";
+				channelname3.text = "bjtv";
+				urls4.text = "http://122.193.8.198:554/168";
+				channelname4.text = "jstv";
+				urls5.text = "http://122.193.8.198:554/161";
+				channelname5.text = "cqtv";
+				urls6.text = "http://122.193.8.198:554/139";
+				channelname6.text = "hntv";
+				urls7.text = "http://122.193.8.198:554/150";
+				channelname7.text = "sztv";
+				urls8.text = "http://122.193.8.198:554/162";
+				channelname8.text = "tjtv";
+				urls9.text = "http://122.193.8.198:554/145";
+				channelname9.text = "zjtv";
+				urls10.text = "http://122.193.8.198:554/146";
+				channelname10.text = "stv";
+				urls11.text = "http://122.193.8.198:554/155";
+				channelname11.text = "sctv";
+				urls12.text = "http://122.193.8.198:554/158";
+				channelname12.text = "fjtv";
+
+				manager_ = new StreamManager(320, 240);
+				for (var i:uint = 0; i < num_streams; i ++)
+					manager_.AddStream(new MulticastStream(manager_));
+
+				online_user.addChild(manager_.online_user_.chart);
+				server_load.addChild(manager_.server_load_.chart);
+				bitrate.addChild(manager_.bitrate_.chart);
+				peer_contribution.addChild(manager_.peer_percentage_.chart);
+				num_interruptions.addChild(manager_.num_interruptions_.chart);
+				http_time.addChild(manager_.http_time_.chart);
+				delay.addChild(manager_.delay_.chart);
+				symmetric_NAT.addChild(manager_.symmetric_NAT_.chart);
+				userlocation.addChild(manager_.user_location_.chart);
+			}
+			private function onClick(urls:TextInput, channelname:TextInput, videoDisplay:VideoDisplay, button:Button, stream_num:uint):void
+			{
+				try
+				{
+					if (button.label == "Start")
+					{
+						var stream:Stream = manager_.Start(urls.text, channelname.text, null, stream_num-1);
+						if (stream != null)
+						{
+							if (videoDisplay != null) videoDisplay.addChild(stream.video);
+							button.label = "End";
+						}
+					}
+					else
+						if (manager_.Stop(stream_num-1) == true)	button.label = "Start";
+				}
+				catch (error:Error)
+				{
+					Alert.show(error.message);
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Style>
+		.buttonStyle {
+			color: "0x0000FF";
+			textRollOverColor: "0xFFFFFF";
+			textSelectedColor: "0xFFFFFF";
+		}
+	</fx:Style>
+	<mx:VBox width="1400" height="840">
+		<mx:HBox>
+			<mx:UIComponent id="online_user" width="320" height="240" />
+			<mx:UIComponent id="server_load" width="320" height="240" />
+			<mx:UIComponent id="bitrate" width="320" height="240" />
+			<mx:VBox>
+				<mx:HBox>
+					<mx:TextInput id="urls1"  width="200"/>
+					<mx:TextInput id="channelname1"  width="50"/>
+					<mx:Button id="button1" label="Start" click="onClick(urls1, channelname1, null, button1, 1)" styleName="buttonStyle"/>
+				</mx:HBox>
+				<mx:HBox>
+					<mx:TextInput id="urls2"  width="200"/>
+					<mx:TextInput id="channelname2"  width="50"/>
+					<mx:Button id="button2" label="Start" click="onClick(urls2, channelname2, null, button2, 2)" styleName="buttonStyle"/>
+				</mx:HBox>
+				<mx:HBox>
+					<mx:TextInput id="urls3"  width="200"/>
+					<mx:TextInput id="channelname3"  width="50"/>
+					<mx:Button id="button3" label="Start" click="onClick(urls3, channelname3, null, button3, 3)" styleName="buttonStyle"/>
+				</mx:HBox>
+				<mx:HBox>
+					<mx:TextInput id="urls4"  width="200"/>
+					<mx:TextInput id="channelname4"  width="50"/>
+					<mx:Button id="button4" label="Start" click="onClick(urls4, channelname4, null, button4, 4)" styleName="buttonStyle"/>
+				</mx:HBox>
+			</mx:VBox>
+		</mx:HBox>
+		<mx:HBox>
+			<mx:UIComponent id="peer_contribution" width="320" height="240" />
+			<mx:UIComponent id="num_interruptions" width="320" height="240" />
+			<mx:UIComponent id="http_time" width="320" height="240" />
+			<mx:VBox>
+				<mx:HBox>
+					<mx:TextInput id="urls5"  width="200"/>
+					<mx:TextInput id="channelname5"  width="50"/>
+					<mx:Button id="button5" label="Start" click="onClick(urls5, channelname5, null, button5, 5)" styleName="buttonStyle"/>
+				</mx:HBox>
+				<mx:HBox>
+					<mx:TextInput id="urls6"  width="200"/>
+					<mx:TextInput id="channelname6"  width="50"/>
+					<mx:Button id="button6" label="Start" click="onClick(urls6, channelname6, null, button6, 6)" styleName="buttonStyle"/>
+				</mx:HBox>
+				<mx:HBox>
+					<mx:TextInput id="urls7"  width="200"/>
+					<mx:TextInput id="channelname7"  width="50"/>
+					<mx:Button id="button7" label="Start" click="onClick(urls7, channelname7, null, button7, 7)" styleName="buttonStyle"/>
+				</mx:HBox>
+				<mx:HBox>
+					<mx:TextInput id="urls8"  width="200"/>
+					<mx:TextInput id="channelname8"  width="50"/>
+					<mx:Button id="button8" label="Start" click="onClick(urls8, channelname8, null, button8, 8)" styleName="buttonStyle"/>
+				</mx:HBox>
+			</mx:VBox>
+		</mx:HBox>
+		<mx:HBox>
+			<mx:UIComponent id="delay" width="320" height="240" />
+			<mx:UIComponent id="symmetric_NAT" width="320" height="240" />
+			<mx:UIComponent id="userlocation" width="320" height="240" />
+			<mx:VBox>
+				<mx:HBox>
+					<mx:TextInput id="urls9"  width="200"/>
+					<mx:TextInput id="channelname9"  width="50"/>
+					<mx:Button id="button9" label="Start" click="onClick(urls9, channelname9, null, button9, 9)" styleName="buttonStyle"/>
+				</mx:HBox>
+				<mx:HBox>
+					<mx:TextInput id="urls10"  width="200"/>
+					<mx:TextInput id="channelname10"  width="50"/>
+					<mx:Button id="button10" label="Start" click="onClick(urls10, channelname10, null, button10, 10)" styleName="buttonStyle"/>
+				</mx:HBox>
+				<mx:HBox>
+					<mx:TextInput id="urls11"  width="200"/>
+					<mx:TextInput id="channelname11"  width="50"/>
+					<mx:Button id="button11" label="Start" click="onClick(urls11, channelname11, null, button11, 11)" styleName="buttonStyle"/>
+				</mx:HBox>
+				<mx:HBox>
+					<mx:TextInput id="urls12"  width="200"/>
+					<mx:TextInput id="channelname12"  width="50"/>
+					<mx:Button id="button12" label="Start" click="onClick(urls12, channelname12, null, button12, 12)" styleName="buttonStyle"/>
+				</mx:HBox>
+			</mx:VBox>
+		</mx:HBox>		
+	</mx:VBox>	
+</mx:WindowedApplication>
