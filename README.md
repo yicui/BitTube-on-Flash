@@ -1,3 +1,5 @@
+Background
+----------
 Since the completion of [BitTube](https://github.com/yicui/BitTube) project, I haven't given up looking for ways to
 further minimize intrusion of a P2P program. It came to my mind that the best way to hide your P2P functionality is
 the Flash player itself. After all, why do you need two pieces of program to coordinate on the same job? Also since
@@ -17,7 +19,8 @@ About six months into my development, a new version of RTMFP was introduced, thi
 everything: object replication in a BitTorrent-fashioned swarm, application-layer multicasting either pull- or push-based,
 message broadcasting. This rendered my own development largely useless, but that's okay, we can now focus on the
 application.
-
+Rationale
+---------
 This time I decided to focus on live streaming: lectures, broadcasting from a studio or TV channel. The reasons? First,
 hiding everything in the Flash player has a price to pay: users can shut it down anytime just by closing the webpage.
 Second, the Flash sandboxed model requires the player to only access network resources, not local ones. So you can't
@@ -35,7 +38,18 @@ not come from a camera, but from some TV capturing devices or already wrapped in
 FMS/Wowza/who-knows-what server. What's my chance if I ask these **functioning** legacy infrastructure to be restructured 
 for some bandwidth-saving pitch? Well, I learned this the hard way: operators hate intrusion as much as users, 
 if not more.
-
-So my approach is to ignore the source of the feeds, but focus on the stream itself. Most open media containers follow
-a remarkly similar structure: a file header followed by an array of audio/video/metadata blocks sequenced by their
-timestamps.
+Design
+------
+So I decided to ignore the source of the feeds, but deal with the stream itself. Most open media containers follow
+a remarkly similar structure: a file header followed by an array of audio/video/metadata blocks, or tags in 
+[FLV jargons](http://download.macromedia.com/f4v/video_file_format_spec_v10_1.pdf), which are sequenced by their
+timestamps. As long as I can make a server (or proxy if you prefer) to break this stream into packets (each containing
+one or more tags) and throw them into the NetGroup swarm, the rest will be straightforward: peers can retrieve these 
+pieces and reassemble them based on the timestamps therein, then feed to the player. As of now we support live streaming
+in the following scenarios:
+#### HTTP Stream
+In order to parse and carve out tags from the FLV file beging streamed, we use the raw
+[Socket](http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/net/Socket.html) class and implement
+a mini-HTTP parser. We use the *send()* method of NetStream quite extensively to push these tags into the NetGroup swarm.
+#### Local File
+In order to parse and carve out tags from the FLV file beging streamed, we use the raw
