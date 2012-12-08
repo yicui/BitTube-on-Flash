@@ -53,11 +53,11 @@ package edu.vanderbilt.bittube.server.livestream
 		{
 			if (this.started == true)
 			{
-				throw Error("直播进行中");
+				throw Error("On Air");
 			}
 			if ((channelname == null) || (channelname == ""))
 			{
-				throw Error("频道名称不得为空");	
+				throw Error("Channel name must not be empty");	
 			}
 			this.channel_name = channelname;
 			
@@ -94,7 +94,7 @@ package edu.vanderbilt.bittube.server.livestream
 		public override function JoinNetGroup():void
 		{
 			if (this.channel_name == null) return;
-			var groupSpecifier:GroupSpecifier = new GroupSpecifier("haichuangmedia.com/"+this.channel_name);
+			var groupSpecifier:GroupSpecifier = new GroupSpecifier("bittube.vanderbilt.edu/"+this.channel_name);
 			groupSpecifier.serverChannelEnabled = true;
 			groupSpecifier.postingEnabled = true;
 			groupSpecifier.routingEnabled = true;
