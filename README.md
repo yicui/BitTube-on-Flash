@@ -30,4 +30,7 @@ For those who has played with ActionScript, live streaming may sound rather triv
 [NetStream](http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/net/NetStream.html) class. All you
 have to do is hook the broadcasting node with a camera, then call *publish()*, and let subscribers call *play()*, done.
 While this is all true, I want my application to help in more scenarios. First, many event organizers want to save 
-their broadcasts and replay later, which is not supported by the above simple operation. Second, lots of 
+their broadcasts and replay later, which is not supported by the above simple operation. Second, lots of live feeds do
+not come from a camera, but from some TV capturing devices or already wrapped in HTTP or RTMP stream emitted from an
+FMS/Wowza/who-knows-what server. What's my chance if I ask these **functioning** legacy infrastructure to be restructured 
+for some bandwidth saving? Well, I learned this the hard way: operators hate intrusion as much as users, if not more.
