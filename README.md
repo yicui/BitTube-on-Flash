@@ -12,7 +12,7 @@ of its own servers and you must apply for an account to use it. So everything wa
 me off any time. But this is good enough for me and I can build whatever lacking by my own code. And best of all, this
 all happens inside the Flash player, exactly what I'm looking for.
 
-About six months into my development, a new version RTMFP was introduced, this time with the powerful 
+About six months into my development, a new version of RTMFP was introduced, this time with the powerful 
 [NetGroup](http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/net/NetGroup.html) that can do
 everything: object replication in a BitTorrent-fashioned swarm, application-layer multicasting either pull- or push-based,
 message broadcasting. This rendered my own development largely useless, but that's okay, we can now focus on the
@@ -33,4 +33,9 @@ While this is all true, I want my application to help in more scenarios. First, 
 their broadcasts and replay later, which is not supported by the above simple operation. Second, lots of live feeds do
 not come from a camera, but from some TV capturing devices or already wrapped in HTTP or RTMP stream emitted from an
 FMS/Wowza/who-knows-what server. What's my chance if I ask these **functioning** legacy infrastructure to be restructured 
-for some bandwidth saving? Well, I learned this the hard way: operators hate intrusion as much as users, if not more.
+for some bandwidth-saving pitch? Well, I learned this the hard way: operators hate intrusion as much as users, 
+if not more.
+
+So my approach is to ignore the source of the feeds, but focus on the stream itself. Most open media containers follow
+a remarkly similar structure: a file header followed by an array of audio/video/metadata blocks sequenced by their
+timestamps.
