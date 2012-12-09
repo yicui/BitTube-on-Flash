@@ -19,6 +19,7 @@ About six months into my development, a new version of RTMFP was introduced, thi
 everything: object replication in a BitTorrent-fashioned swarm, application-layer multicasting either pull- or push-based,
 message broadcasting. This rendered my own development largely useless, but that's okay, we can now focus on the
 application.
+
 Rationale
 ---------
 This time we decided to focus on live streaming: lectures, broadcasting from a studio or TV channel. The reasons? First,
@@ -46,7 +47,7 @@ a remarkly similar structure: a file header followed by an array of audio/video/
 timestamps. As long as I can make a server (or proxy if you prefer) to break this stream into packets (each containing
 one or more tags) and throw them into the NetGroup swarm, the rest will be straightforward: peers can retrieve these 
 pieces and reassemble them based on the timestamps therein, then feed to the player. As of now we support live streaming
-in the following scenarios:
+in the following scenarios. Each of them is 
 #### HTTP Stream
 ![Adobe Media Encoder](https://github.com/downloads/yicui/BitTube-on-Flash/server.jpg)
 
@@ -71,3 +72,9 @@ FMLE, which are then sent to the NetGroup swarm.
 The usage is the same as HTTP streaming, but you have to tweak your M3U8 server to support not only TS files, but also
 FLV files. This is solely because the *appendBytes()* method of NetStream, which the client player needs to play out the
 downloaded tags, recognizes FLV tags only. I really hope Adobe can broaden the selection someday.
+
+Getting it to work
+------------------
+Digging into the source code you will find two directories: server and client-side player. I made the server an AIR
+application, only because it enables the "Local File" option to access local file system. If you find this option
+unnecessary, you can just remove the *DownloadStream* class. turn actually it into a SWF hostable via a webpage. 
