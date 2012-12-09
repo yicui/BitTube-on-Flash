@@ -53,3 +53,5 @@ In order to parse and carve out tags from the FLV file beging streamed, we use t
 a mini-HTTP parser. We use the *send()* method of NetStream quite extensively to push these tags into the NetGroup swarm.
 #### Local File
 In order to parse and carve out tags from the FLV file beging streamed, we use the raw
+![Adobe Media Encoder](https://github.com/downloads/yicui/BitTube-on-Flash/liveencoder.jpg)
+![Adobe Media Encoder](https://github.com/downloads/yicui/BitTube-on-Flash/server.jpg)
