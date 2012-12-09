@@ -54,9 +54,11 @@ in the following scenarios. Each of them is
 In order to parse and carve out tags from the FLV file beging streamed, we use the raw
 [Socket](http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/net/Socket.html) class and implement
 a mini-HTTP parser. We use the *send()* method of NetStream quite extensively to push these tags into the NetGroup swarm.
-Starting the server is quite easy, just fill in the stream URL and press "Begin". The video window simply looks back 
-the tags it parses from the HTTP stream. This is to confirm to the operator that the URL is functioning. Also the server
-supports as many broadcasting channels as the bandwidth allows, one NetGroup for each channel.
+Starting the server is quite easy, just fill in the stream URL and press "Begin". Also notice the text field besides the
+URL field: this is where you define the **UNIQUE** name of the NetGroup to which your video is to be distributed. 
+The video window simply looks back the tags it parses from the HTTP stream. This is to confirm to the operator that 
+the URL is functioning. Also the server supports as many broadcasting channels as the bandwidth allows, one NetGroup 
+for each channel.
 
 #### Local File
 ![Adobe Media Encoder](https://github.com/downloads/yicui/BitTube-on-Flash/liveencoder.jpg)
@@ -76,5 +78,11 @@ downloaded tags, recognizes FLV tags only. I really hope Adobe can broaden the s
 Getting it to work
 ------------------
 Digging into the source code you will find two directories: server and client-side player. I made the server an AIR
-application, only because it enables the "Local File" option to access local file system. If you find this option
-unnecessary, you can just remove the *DownloadStream* class. turn actually it into a SWF hostable via a webpage. 
+application, only because it enables the "Local File" option to access local file system. Those nice charts are not
+drawn by me, but [Flash Open Chart](http://teethgrinder.co.uk/open-flash-chart/). It's up to you to include it as a SWC
+or just add its source code to the project.
+
+The player.fla under the root directory provides a simple template to compile the player source code into SWF. I used
+Flash CS5. Feel free to use your own FLA as long as it has all the necessary buttons: play, stop, pause, volume up/down,
+etc. Also under the root directory, I made player.html to show you how to embed the SWF player and inject Flash arguments,
+most important of which is the **name**, i.e., the name of the NetGroup you want to join.
