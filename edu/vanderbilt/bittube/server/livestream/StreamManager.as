@@ -41,15 +41,15 @@
 
 			// Initialize LineCharts and PieChart
 			this.timestamp_ = (uint)((new Date().getTime())/1000);
-			this.bitrate_ = new LineChart("码流(字节/秒)", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
-			this.online_user_ = new LineChart("在线用户数", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
-			this.server_load_ = new LineChart("服务器负荷(字节/秒)", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
-			this.peer_percentage_ = new LineChart("超分布比率(%)", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
-			this.delay_ = new LineChart("平均延迟(秒)", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
-			this.http_time_ = new LineChart("平均等待时间(秒)", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
-			this.num_interruptions_ = new LineChart("用户观看卡次数(平均)", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
-			this.symmetric_NAT_ = new LineChart("对称防火墙比率(%)", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
-			this.user_location_ = new PieChart("用户分布", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 1);
+			this.bitrate_ = new LineChart("bitrate", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
+			this.online_user_ = new LineChart("online users", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
+			this.server_load_ = new LineChart("server load", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
+			this.peer_percentage_ = new LineChart("peer percentage", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
+			this.delay_ = new LineChart("average delay", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
+			this.http_time_ = new LineChart("average startup delay", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
+			this.num_interruptions_ = new LineChart("number of interruptions", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
+			this.symmetric_NAT_ = new LineChart("percentage of symmetric NAT", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 0);
+			this.user_location_ = new PieChart("user locations", new Rectangle(0, 0, chart_width, chart_height), this.timestamp_, 1);
 		}
 		public function AddStream(stream:Stream, color:String=null):uint
 		{
