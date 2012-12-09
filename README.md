@@ -78,9 +78,9 @@ downloaded tags, recognizes FLV tags only. I really hope Adobe can broaden the s
 Getting it to work
 ------------------
 Digging into the source code you will find two directories: server and client-side player. I made the server an AIR
-application, only because it enables the "Local File" option to access local file system. Those nice charts are not
-drawn by me, but [Flash Open Chart](http://teethgrinder.co.uk/open-flash-chart/). It's up to you to include it as a SWC
-or just add its source code to the project.
+application, only because it enables the "Local File" option to access local file system. Those nice-looking charts 
+are not drawn by me, but [Flash Open Chart](http://teethgrinder.co.uk/open-flash-chart/). It's up to you to include 
+it as a SWC or just directly add its source code to the project.
 
 The player.fla under the root directory provides a simple template to compile the player source code into SWF. I used
 Flash CS5. Feel free to use your own FLA as long as it has all the necessary buttons: play, stop, pause, volume up/down,
