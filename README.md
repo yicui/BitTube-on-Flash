@@ -7,7 +7,7 @@ Flash had (and still has) such a high penetration rate, if I could find a way to
 world domination :) I came as close to Flash's [Socket API](http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/net/Socket.html) 
 but couldn't get further. All I need is my socket able to listen on a port, but understandably this shouldn't be allowed.
 
-Then in the early summer of 2009, my dream came true: Adobe rolled out their [RTMFP protocol](http://en.wikipedia.org/wiki/Real_Time_Media_Flow_Protocol)!
+In the early summer of 2009, my dream came true: Adobe rolled out their [RTMFP protocol](http://en.wikipedia.org/wiki/Real_Time_Media_Flow_Protocol)!
 I jumped in immediately only to find out it was quite primitive: only point-to-point connection is allowed among peers.
 Also instead of integrating the tracker functionality into one of their products like Media Server, Adobe kept it on one
 of its own servers and you must apply for an account to use it. So everything was behind a black box and they could cut
@@ -21,7 +21,7 @@ message broadcasting. This rendered my own development largely useless, but that
 application.
 Rationale
 ---------
-This time I decided to focus on live streaming: lectures, broadcasting from a studio or TV channel. The reasons? First,
+This time we decided to focus on live streaming: lectures, broadcasting from a studio or TV channel. The reasons? First,
 hiding everything in the Flash player has a price to pay: users can shut it down anytime just by closing the webpage.
 Second, the Flash sandboxed model requires the player to only access network resources, not local ones. So you can't
 access data on hard drive like BitTorrent does. In lieu of the longevitity & rich accessiblity a BitTorrent client can
@@ -48,10 +48,26 @@ one or more tags) and throw them into the NetGroup swarm, the rest will be strai
 pieces and reassemble them based on the timestamps therein, then feed to the player. As of now we support live streaming
 in the following scenarios:
 #### HTTP Stream
+![Adobe Media Encoder](https://github.com/downloads/yicui/BitTube-on-Flash/server.jpg)
+
 In order to parse and carve out tags from the FLV file beging streamed, we use the raw
 [Socket](http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/net/Socket.html) class and implement
 a mini-HTTP parser. We use the *send()* method of NetStream quite extensively to push these tags into the NetGroup swarm.
+Starting the server is quite easy, just fill in the stream URL and press "Begin". The video window simply looks back 
+the tags it parses from the HTTP stream. This is to confirm to the operator that the URL is functioning. Also the server
+supports as many broadcasting channels as the bandwidth allows, one NetGroup for each channel.
+
 #### Local File
-In order to parse and carve out tags from the FLV file beging streamed, we use the raw
 ![Adobe Media Encoder](https://github.com/downloads/yicui/BitTube-on-Flash/liveencoder.jpg)
-![Adobe Media Encoder](https://github.com/downloads/yicui/BitTube-on-Flash/server.jpg)
+
+This option might sound odd but it's proven to be a convenient way for home-grown broadcasting. All you need is a laptop
+with webcam, the free [Adobe Media Live Encoder](http://www.adobe.com/products/flash-media-encoder.html) (FMLE), 
+and a good wifi connection. As shown in the picture above, choose "Save to File" in FMLE, and it will write the recorded
+stream into a local file of your choice. Then switch to the BitTube server, press "Begin" with the URL field left blank,
+a file dialog shall appear. Choose the same file that FMLE is currently writing to, and your broadcasting will begin.
+The trick here is quite simple, BitTube server periodically seeks to the tail of the file to read out new tags added by
+FMLE, which are then sent to the NetGroup swarm. 
+#### M3U8 Stream
+The usage is the same as HTTP streaming, but you have to tweak your M3U8 server to support not only TS files, but also
+FLV files. This is solely because the *appendBytes()* method of NetStream, which the client player needs to play out the
+downloaded tags, recognizes FLV tags only. I really hope Adobe can broaden the selection someday.
