@@ -46,8 +46,10 @@ a remarkly similar structure: a file header followed by an array of audio/video/
 [FLV jargons](http://download.macromedia.com/f4v/video_file_format_spec_v10_1.pdf), which are sequenced by their
 timestamps. As long as I can make a server (or proxy if you prefer) to break this stream into packets (each containing
 one or more tags) and throw them into the NetGroup swarm, the rest will be straightforward: peers can retrieve these 
-pieces and reassemble them based on the timestamps therein, then feed to the player. As of now we support live streaming
-in the following scenarios. Each of them is 
+pieces and reassemble them based on the timestamps therein, then feed to the player. This is how BitTube-on-Flash works
+in principal.
+
+As of now we support live streaming in the following scenarios.
 #### HTTP Stream
 ![Adobe Media Encoder](https://github.com/downloads/yicui/BitTube-on-Flash/server.jpg)
 
@@ -78,14 +80,14 @@ downloaded tags, recognizes FLV tags only. I really hope Adobe can broaden the s
 Getting it to work
 ------------------
 Digging into the source code you will find two directories: server and client-side player. I made the server an AIR
-application, only because it enables the "Local File" option to access local file system. Those nice-looking charts 
+application, because it enables the "Local File" option to access local file system. Those nice-looking charts 
 are not drawn by me, but [Flash Open Chart](http://teethgrinder.co.uk/open-flash-chart/). It's up to you to include 
 it as a SWC or just directly add its source code to the project.
 
-The player.fla under the root directory provides a simple template to compile the player source code into SWF. I used
+The *player.fla* under the root directory provides a simple template to compile the player source code into SWF. I used
 Flash CS5. Feel free to use your own FLA as long as it has all the necessary buttons: play, stop, pause, volume up/down,
-etc. Also under the root directory, I made player.html to show you how to embed the SWF player and inject Flash arguments,
-most important of which is the **name**, i.e., the name of the NetGroup you want to join.
+etc. Also under the root directory, I made *player.html* to show you how to embed the SWF player and inject Flash 
+arguments, most important of which is the **name**, i.e., the name of the NetGroup you want to join.
 
 Also in my source code, both server and player connect to rtmfp://p2p.rtmfp.net/, which is the official RTMFP server
 hosted by Adobe. But since RTMFP has now been [reverse-engineered and open-sourced](https://github.com/OpenRTMFP), 
