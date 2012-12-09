@@ -58,7 +58,7 @@ In order to parse and carve out tags from the FLV file beging streamed, we use t
 a mini-HTTP parser. We use the *send()* method of NetStream quite extensively to push these tags into the NetGroup swarm.
 Starting the server is quite easy, just fill in the stream URL and press "Begin". Also notice the text field besides the
 URL field: this is where you define the **UNIQUE** name of the NetGroup to which your video is to be distributed. 
-The video window simply looks back the tags it parses from the HTTP stream. This is to confirm to the operator that 
+The video window plays back the tags it parses from the HTTP stream. This is to confirm to the operator that 
 the URL is functioning. Also the server supports as many broadcasting channels as the bandwidth allows, one NetGroup 
 for each channel.
 
