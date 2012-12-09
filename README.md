@@ -86,3 +86,7 @@ The player.fla under the root directory provides a simple template to compile th
 Flash CS5. Feel free to use your own FLA as long as it has all the necessary buttons: play, stop, pause, volume up/down,
 etc. Also under the root directory, I made player.html to show you how to embed the SWF player and inject Flash arguments,
 most important of which is the **name**, i.e., the name of the NetGroup you want to join.
+
+Also in my source code, both server and player connect to rtmfp://p2p.rtmfp.net/, which is the official RTMFP server
+hosted by Adobe. But since RTMFP has now been [reverse-engineered and open-sourced](https://github.com/OpenRTMFP), 
+you can actually set up your own RTMFP server rather easily.
