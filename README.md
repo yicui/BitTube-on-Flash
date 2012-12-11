@@ -92,3 +92,19 @@ arguments, most important of which is the **name**, i.e., the name of the NetGro
 Also in my source code, both server and player connect to rtmfp://p2p.rtmfp.net/, which is the official RTMFP server
 hosted by Adobe. But since RTMFP has now been [reverse-engineered and open-sourced](https://github.com/OpenRTMFP), 
 you can actually set up your own RTMFP server rather easily.
+
+Epilogue
+--------
+BitTube-on-Flash has been used to help broadcasting a few events for KTSF 26, and live broadasting of Chinese Spring
+Festival Gala on bigtvusa.com. What's next? One thing I do know is technology of this kind needs to head to the mobile
+space. Someone might tell me that the Flash player is 
+[pulling out of the mobile market](http://blogs.adobe.com/conversations/2011/11/flash-focus.html), but I need to
+emphasize that the AIR app is here to stay, which is exactly where RTMFP should shine: streaming, games, chat, any
+scenario requiring distribution of digital content to vast number of users. As of now, proprietary apps rule the 
+mobile braodcasting domain, e.g., Qik and UStream, but I think the entry barrier will be greatly lowered by open-source
+alternatives. When I get time, maybe I'll extend BitTube-on-Flash to Android.
+
+Speaking of open source, I also keep a close eye on [WebRTC](http://www.webrtc.org/), whose peerconnection API is
+quite similar to early-stage RTMFP in Flash Player 10.0. Penetration rate being the most important metric for P2P
+technology, WebRTC is still no match to RTMFP as of now. When the time comes, BitTube-on-Flash should be ported (by me
+or anyone interested) to this new platform, which shall be a truly exciting.
